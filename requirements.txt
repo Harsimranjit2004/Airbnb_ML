@@ -1,0 +1,10 @@
+dvc
+numpy
+pandas
+scikit-learn
+kaggle
+feature_engine
+matplotlib
+seaborn
+python-dotenv
+streamlit

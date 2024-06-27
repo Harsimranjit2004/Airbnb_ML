@@ -1,0 +1,93 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: params.yaml
+      hash: md5
+      md5: 75e3058cef97ca71acb829cb5738b039
+      size: 32
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: 26f6123958b946b63ab76e9fdf30e066
+      size: 4215
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 93afba465bc96350213e8fabd3d54cdd.dir
+      size: 37044245
+      nfiles: 2
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 93afba465bc96350213e8fabd3d54cdd.dir
+      size: 37044245
+      nfiles: 2
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: 25e321391f03e1df4b729c0536580b5e
+      size: 4158
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 0402d53244a5bb557056be8c0e1333ac.dir
+      size: 35535071
+      nfiles: 2
+  feature_eng:
+    cmd: python src/feature_eng.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 0402d53244a5bb557056be8c0e1333ac.dir
+      size: 35535071
+      nfiles: 2
+    - path: src/feature_eng.py
+      hash: md5
+      md5: 47acdcb06a43bf27574ff40591a2bb9b
+      size: 5445
+    outs:
+    - path: data/features
+      hash: md5
+      md5: 0ee8a2f2d721429eab3fd89b78366206.dir
+      size: 102423241
+      nfiles: 2
+  model_building:
+    cmd: python src/model_building.py
+    deps:
+    - path: data/features
+      hash: md5
+      md5: 0ee8a2f2d721429eab3fd89b78366206.dir
+      size: 102423241
+      nfiles: 2
+    - path: src/model_building.py
+      hash: md5
+      md5: 36af3f0cea3e6e2298c5b97ba08e4fb3
+      size: 2153
+    outs:
+    - path: models/xgb-model.pkl
+      hash: md5
+      md5: 64c01ab22a14f7b87bee59f8112a6739
+      size: 185474
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - path: data/features
+      hash: md5
+      md5: 0ee8a2f2d721429eab3fd89b78366206.dir
+      size: 102423241
+      nfiles: 2
+    - path: models/xgb-model.pkl
+      hash: md5
+      md5: 64c01ab22a14f7b87bee59f8112a6739
+      size: 185474
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: 3ac1fa8b73e28e77db0969c63ca77a61
+      size: 2138
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: dc4b2b82b0ccfccd049a80eacb92d15f
+      size: 38

@@ -1,0 +1,37 @@
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - params.yaml
+    - src/data_ingestion.py
+    outs:
+    - data/raw
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - data/raw
+    - src/data_preprocessing.py
+    outs:
+    - data/processed
+  feature_eng:
+    cmd: python src/feature_eng.py
+    deps:
+    - data/processed
+    - src/feature_eng.py
+    outs:
+    - data/features
+  model_building:
+    cmd: python src/model_building.py
+    deps:
+    - data/features
+    - src/model_building.py
+    outs:
+    - models/xgb-model.pkl
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - data/features
+    - models/xgb-model.pkl
+    - src/model_evaluation.py
+    metrics:
+    - metrics.json
