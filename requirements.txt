@@ -7,4 +7,5 @@ feature_engine
 matplotlib
 seaborn
 python-dotenv
+xgboost
 streamlit
