@@ -37,7 +37,7 @@ def preFeatureEng(df: pd.DataFrame) -> pd.DataFrame:
 
 ####################### Streamlit App ###########################
 
-train = pd.read_csv('./data/processed/train_processed.csv')
+train = pd.read_csv('data/processed/test_processed.csv')
 st.title('Airbnb Price Prediction')
 user_input = {}
 
